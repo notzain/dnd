@@ -3,19 +3,6 @@
 
 #include "Monster.h"
 
-struct MonsterArray {
-    Monster** array{};
-    std::size_t length{};
-
-    virtual ~MonsterArray()
-    {
-        for (int i = 0; i < length; ++i) {
-            delete array[i];
-        }
-        delete[] array;
-    }
-};
-
 class MonsterReader {
     MonsterArray* m_monsters;
 

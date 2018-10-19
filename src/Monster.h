@@ -60,4 +60,17 @@ public:
     void setHitpoints(int hitpoints);
 };
 
+struct MonsterArray {
+    Monster** array{};
+    std::size_t length{};
+
+    virtual ~MonsterArray()
+    {
+        for (int i = 0; i < length; ++i) {
+            delete array[i];
+        }
+        delete[] array;
+    }
+};
+
 #endif // DND_MONSTER_H

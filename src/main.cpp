@@ -2,13 +2,15 @@
 
 #include "DungeonLayer.h"
 #include "DungeonRoom.h"
+#include "Game.h"
 #include "Monster.h"
 #include "MonsterReader.h"
-#include "Game.h"
+#include "RustySword.h"
 
 int main()
 {
-    DungeonLayerConfiguration configuration{
+    MonsterReader monsterReader;
+    auto* config = new DungeonLayerConfiguration{
         .width = 10,
         .height = 5,
 
@@ -18,10 +20,13 @@ int main()
         .minEnemyLevel = 1,
         .maxEnemyLevel = 3,
 
-        .hasBoss = false
+        .hasBoss = false,
+        .monsters = monsterReader.createFromFile(("../monsters.txt"))
     };
+
     Hero hero("Zain", 0, 100, 0, 30, 30);
-    DungeonLayer layer(configuration, hero);
+    hero.inventory().addItem(new RustySword());
+    DungeonLayer layer(config, hero);
 
     Game game(layer, hero);
     game.play();

@@ -2,31 +2,44 @@
 #include "Item.h"
 #include <stdexcept>
 
-Inventory::Inventory() {
-    for (auto &m_item : m_items) {
+Inventory::Inventory()
+{
+    for (auto& m_item : m_items) {
         m_item = nullptr;
     }
 };
 
 Inventory::~Inventory()
 {
-    for (auto &m_item : m_items) {
+    for (auto* m_item : m_items) {
         delete m_item;
     }
 }
 
 Item* Inventory::getItem(std::size_t index) const
 {
-    if (index > 3 || index < 0 || index > m_slot) {
-        throw std::runtime_error("Invalid index length.");
+    if (index < 0 || index > MAX_ITEMS) {
+        throw std::runtime_error("Invalid item index.");
     }
-
     return m_items[index];
 }
 
 void Inventory::addItem(Item* item)
 {
-    if (m_slot > 3) {
+    for (auto &m_item : m_items) {
+        if (m_item == nullptr) {
+            m_item = item;
+            break;
+        }
     }
-    m_items[m_slot] = item;
+}
+
+void Inventory::removeItem(Item* item)
+{
+    for (auto &m_item : m_items) {
+        if (m_item == item) {
+            delete m_item;
+            m_item = nullptr;
+        }
+    }
 }

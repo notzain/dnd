@@ -17,19 +17,32 @@ void DungeonStaircase::visit()
     std::cout << "You find a staircase going " << (m_goesUp ? "up" : "down") << '\n';
 }
 
-void DungeonStaircase::print()
+void DungeonStaircase::printSymbol(std::ostream& str)
 {
-    const char* room = isVisited() ? (m_goesUp ? "H" : "L") : ".";
-
-    bool hallwayRightVisited = false;
-    if (m_x + 1 < m_parentLayer.config().width) {
-        hallwayRightVisited = isVisited() && m_parentLayer.visitables()[m_x + 1][m_y]->isVisited();
+    if (m_parentLayer.hero().x() == m_x && m_parentLayer.hero().y() == m_y) {
+        str << "P";
+    } else {
+        const char* room = isVisited() ? (m_goesUp ? "H" : "L") : ".";
+        str << room;
     }
+}
 
+void DungeonStaircase::printHorizontalNeighbour(std::ostream& str)
+{
+    bool hallwayRightVisited = false;
+    if (m_y + 1 < m_parentLayer.config().height) {
+        hallwayRightVisited = isVisited() && m_parentLayer.visitables()[m_x][m_y + 1]->isVisited();
+    }
     const char* rightHall = hallwayRightVisited ? "--" : "  ";
+    str << rightHall;
+}
 
-    if (m_parentLayer.hero().x() == m_x && m_parentLayer.hero().y() == m_y)
-        std::cout << 'P' << rightHall;
-    else
-        std::cout << room << rightHall;
+void DungeonStaircase::printVerticalNeighbour(std::ostream& str)
+{
+    bool hallwayDownVisited = false;
+    if (m_x + 1 < m_parentLayer.config().height) {
+        hallwayDownVisited = isVisited() && m_parentLayer.visitables()[m_x + 1][m_y]->isVisited();
+    }
+    const char* downHall = hallwayDownVisited ? "¦  " : "   ";
+    str << downHall;
 }

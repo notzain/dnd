@@ -29,4 +29,4 @@ add_executable(dnd
         src/RNG.cpp
         src/RNG.h
         src/main.cpp
-        )
+        src/FightSystem.cpp src/FightSystem.h src/InventorySystem.cpp src/InventorySystem.h src/RustySword.cpp src/RustySword.h src/KnightSword.cpp src/KnightSword.h src/TravelSystem.cpp src/TravelSystem.h)

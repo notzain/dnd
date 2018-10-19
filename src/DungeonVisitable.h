@@ -3,6 +3,7 @@
 
 #include <cstddef>
 #include <cstring>
+#include <iosfwd>
 
 class DungeonVisitable {
     char* m_description{};
@@ -34,7 +35,9 @@ public:
     }
 
     virtual void visit() = 0;
-    virtual void print() = 0;
+    virtual void printSymbol(std::ostream& str) = 0;
+    virtual void printHorizontalNeighbour(std::ostream& str) = 0;
+    virtual void printVerticalNeighbour(std::ostream& str) = 0;
 };
 
 #endif //DND_DUNGEONVISITABLE_H

@@ -35,8 +35,9 @@ public:
         strcpy(m_name, name);
     }
 
-    virtual void use(Hero& hero) = 0;
-    virtual void use(Monster& monster) = 0;
+    virtual const char* description() = 0;
+    virtual bool use(Hero &hero) = 0;
+    virtual bool use(Monster &monster) = 0;
 };
 
 #endif //DND_ITEM_H

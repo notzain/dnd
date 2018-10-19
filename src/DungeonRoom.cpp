@@ -1,4 +1,5 @@
 #include "DungeonRoom.h"
+#include "FightSystem.h"
 #include "RNG.h"
 #include <iostream>
 
@@ -44,23 +45,47 @@ DungeonRoom::~DungeonRoom() = default;
 
 void DungeonRoom::visit()
 {
-    m_isVisited = true;
-    std::cout << "You enter a room.\n" << description() << "\n\n";
+    std::cout << "You enter a room.\n"
+              << description() << "\n\n";
+
+    if (!m_isVisited) {
+        m_isVisited = true;
+        auto* monster = m_parentLayer.config().monsters->array[RNG::generate(0,
+            static_cast<int>(m_parentLayer.config().monsters->length - 1))];
+        FightSystem::instance().fight(m_parentLayer.hero(), *monster, m_parentLayer);
+    } else {
+        int chance = RNG::generate(0, 100);
+        // 30% chance to fight monster on re-entering room
+        if (chance < 30) {
+            auto* monster = m_parentLayer.config().monsters->array[RNG::generate(0,
+                static_cast<int>(m_parentLayer.config().monsters->length - 1))];
+            FightSystem::instance().fight(m_parentLayer.hero(), *monster, m_parentLayer);
+        }
+    }
 }
 
-void DungeonRoom::print()
+void DungeonRoom::printSymbol(std::ostream& str)
 {
     const char* room = (isVisited() ? "N" : ".");
+    str << room;
+}
 
+void DungeonRoom::printHorizontalNeighbour(std::ostream& str)
+{
     bool hallwayRightVisited = false;
     if (m_y + 1 < m_parentLayer.config().height) {
         hallwayRightVisited = isVisited() && m_parentLayer.visitables()[m_x][m_y + 1]->isVisited();
     }
+    const char* rightHall = hallwayRightVisited ? "--" : "  ";
+    str << rightHall;
+}
 
-    const char* rightHall = hallwayRightVisited ? "—" : "  ";
-
-    if (m_parentLayer.hero().x() == m_x && m_parentLayer.hero().y() == m_y)
-        std::cout << 'P' << rightHall;
-    else
-        std::cout << room << rightHall;
+void DungeonRoom::printVerticalNeighbour(std::ostream& str)
+{
+    bool hallwayDownVisited = false;
+    if (m_x + 1 < m_parentLayer.config().height) {
+        hallwayDownVisited = isVisited() && m_parentLayer.visitables()[m_x + 1][m_y]->isVisited();
+    }
+    const char* downHall = hallwayDownVisited ? "¦  " : "   ";
+    str << downHall;
 }

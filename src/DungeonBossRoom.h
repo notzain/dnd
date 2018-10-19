@@ -14,7 +14,11 @@ public:
 
     void visit() override;
 
-    void print() override;
+    void printSymbol(std::ostream &str) override;
+
+    void printHorizontalNeighbour(std::ostream &str) override;
+
+    void printVerticalNeighbour(std::ostream &str) override;
 };
 
 #endif //DND_DUNGEONBOSSROOM_H
