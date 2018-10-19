@@ -1,5 +1,7 @@
 #include "DungeonRoom.h"
 #include "FightSystem.h"
+#include "DungeonLayer.h"
+#include "Dungeon.h"
 #include "RNG.h"
 #include <iostream>
 
@@ -52,7 +54,7 @@ void DungeonRoom::visit()
         m_isVisited = true;
         auto* monster = m_parentLayer.config().monsters->array[RNG::generate(0,
             static_cast<int>(m_parentLayer.config().monsters->length - 1))];
-        FightSystem::instance().fight(m_parentLayer.hero(), *monster, m_parentLayer);
+        //FightSystem::instance().fight(m_parentLayer.hero(), *monster, m_parentLayer);
     } else {
         int chance = RNG::generate(0, 100);
         // 30% chance to fight monster on re-entering room
@@ -66,8 +68,12 @@ void DungeonRoom::visit()
 
 void DungeonRoom::printSymbol(std::ostream& str)
 {
-    const char* room = (isVisited() ? "N" : ".");
-    str << room;
+    if (m_parentLayer.hero().x() == m_x && m_parentLayer.hero().y() == m_y) {
+        str << "P";
+    } else {
+        const char* room = (isVisited() ? "N" : ".");
+        str << "N";
+    }
 }
 
 void DungeonRoom::printHorizontalNeighbour(std::ostream& str)
@@ -86,6 +92,6 @@ void DungeonRoom::printVerticalNeighbour(std::ostream& str)
     if (m_x + 1 < m_parentLayer.config().height) {
         hallwayDownVisited = isVisited() && m_parentLayer.visitables()[m_x + 1][m_y]->isVisited();
     }
-    const char* downHall = hallwayDownVisited ? "¦  " : "   ";
+    const char* downHall = hallwayDownVisited ? "|  " : "   ";
     str << downHall;
 }

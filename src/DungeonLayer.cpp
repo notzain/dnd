@@ -1,15 +1,19 @@
 #include "DungeonLayer.h"
 #include "DungeonBossRoom.h"
 #include "DungeonRoom.h"
+#include "Dungeon.h"
+#include "Hero.h"
 #include "DungeonStaircase.h"
 #include "RNG.h"
 
 #include <iostream>
 #include <sstream>
 
-DungeonLayer::DungeonLayer(DungeonLayerConfiguration* configuration, Hero& hero)
+DungeonLayer::DungeonLayer(DungeonLayerConfiguration* configuration, Hero& hero, Dungeon& parent)
     : m_config(configuration)
+    , m_parentDungeon(parent)
     , m_hero(hero)
+
 {
     m_visitables = new DungeonVisitable**[m_config->width];
     for (int i = 0; i < m_config->width; ++i) {
@@ -122,4 +126,14 @@ Hero& DungeonLayer::hero() const
 void DungeonLayer::visit(int x, int y)
 {
     m_visitables[x][y]->visit();
+}
+
+void DungeonLayer::nextLayer()
+{
+    m_parentDungeon.nextLayer();
+}
+
+void DungeonLayer::prevLayer()
+{
+    m_parentDungeon.prevLayer();
 }

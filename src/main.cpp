@@ -10,25 +10,27 @@
 int main()
 {
     MonsterReader monsterReader;
-    auto* config = new DungeonLayerConfiguration{
-        .width = 10,
-        .height = 5,
-
-        .numStairsUp = 1,
-        .numStairsDown = 1,
-
-        .minEnemyLevel = 1,
-        .maxEnemyLevel = 3,
-
-        .hasBoss = false,
-        .monsters = monsterReader.createFromFile(("../monsters.txt"))
+    MonsterArray* monsterArray = nullptr;
+    try {
+        monsterArray = monsterReader.createFromFile("../monsters.txt");
+    } catch (const std::exception& e) {
+        std::cerr << e.what() << "\n\n";
+        std::cerr << "Could not read file\n";
+        return EXIT_FAILURE;
+    }
+    auto* config = new DungeonConfiguration{
+        /* int width; */ 10,
+        /* int height; */ 10,
+        /* int layers; */ 3,
+        /* MonsterArray* monsters; */ monsterArray
     };
 
     Hero hero("Zain", 0, 100, 0, 30, 30);
     hero.inventory().addItem(new RustySword());
-    DungeonLayer layer(config, hero);
 
-    Game game(layer, hero);
+    Dungeon dungeon(config, hero);
+
+    Game game(dungeon, hero);
     game.play();
 
     return 0;

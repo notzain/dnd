@@ -34,6 +34,11 @@ public:
         return m_isVisited;
     }
 
+    void setAsStart()
+    {
+        m_isVisited = true;
+    }
+
     virtual void visit() = 0;
     virtual void printSymbol(std::ostream& str) = 0;
     virtual void printHorizontalNeighbour(std::ostream& str) = 0;

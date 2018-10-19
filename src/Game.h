@@ -1,14 +1,13 @@
 #ifndef DND_GAME_H
 #define DND_GAME_H
 
-
-#include "DungeonLayer.h"
+#include "Dungeon.h"
 
 class Game {
-    DungeonLayer& m_layer;
+    Dungeon& m_dungeon;
     Hero& m_hero;
 public:
-    Game(DungeonLayer &layer, Hero &hero);
+    Game(Dungeon &dungeon, Hero &hero);
     void play();
 };
 

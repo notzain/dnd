@@ -13,11 +13,16 @@ class DungeonStaircase : public DungeonVisitable {
 public:
     DungeonStaircase(DungeonLayer& parentLayer, int x, int y, bool goesUp);
 
+    bool goesUp() const
+    {
+        return m_goesUp;
+    }
+
     void visit() override;
 
-    void printSymbol(std::ostream &str) override;
-    void printHorizontalNeighbour(std::ostream &str) override;
-    void printVerticalNeighbour(std::ostream &str) override;
+    void printSymbol(std::ostream& str) override;
+    void printHorizontalNeighbour(std::ostream& str) override;
+    void printVerticalNeighbour(std::ostream& str) override;
 };
 
 #endif //DND_DUNGEONSTAIRCASE_H

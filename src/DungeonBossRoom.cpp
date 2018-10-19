@@ -1,4 +1,5 @@
 #include "DungeonBossRoom.h"
+#include "Hero.h"
 
 #include <iostream>
 
@@ -17,8 +18,12 @@ void DungeonBossRoom::visit()
 
 void DungeonBossRoom::printSymbol(std::ostream& str)
 {
-    const char* room = (isVisited() ? "B" : ".");
-    str << room;
+    if (m_parentLayer.hero().x() == m_x && m_parentLayer.hero().y() == m_y) {
+        str << "P";
+    } else {
+        const char* room = (isVisited() ? "B" : ".");
+        str << "B";
+    }
 }
 
 void DungeonBossRoom::printHorizontalNeighbour(std::ostream& str)

@@ -2,8 +2,9 @@
 #define DND_DUNGEONLAYER_H
 
 #include "DungeonVisitable.h"
-#include "Hero.h"
-#include "Monster.h"
+class Dungeon;
+class Hero;
+class MonsterArray;
 
 struct DungeonLayerConfiguration {
     int width{},
@@ -18,24 +19,25 @@ struct DungeonLayerConfiguration {
     bool hasBoss{};
 
     MonsterArray* monsters{};
-    ~DungeonLayerConfiguration() {
-        delete monsters;
-    }
 };
 
 class DungeonLayer {
+    Dungeon& m_parentDungeon;
     DungeonLayerConfiguration* m_config;
     DungeonVisitable*** m_visitables;
 
     Hero& m_hero;
 
 public:
-    explicit DungeonLayer(DungeonLayerConfiguration* configuration, Hero& hero);
+    explicit DungeonLayer(DungeonLayerConfiguration* configuration, Hero& hero, Dungeon& parent);
     virtual ~DungeonLayer();
 
     DungeonVisitable*** visitables() const;
     const DungeonLayerConfiguration& config() const;
     Hero& hero() const;
+
+    void nextLayer();
+    void prevLayer();
 
     void visit(int x, int y);
     void print() const;

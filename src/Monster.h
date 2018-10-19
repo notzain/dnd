@@ -41,17 +41,17 @@ public:
 
     virtual ~Monster();
 
-    const char *name() const;
-    void setName(const char *name);
+    const char* name() const;
+    void setName(const char* name);
 
     Level level() const;
     void setLevel(Level level);
 
-    const AttackProbability &attackProbability() const;
-    void setAttackProbability(const AttackProbability &attackProbability);
+    const AttackProbability& attackProbability() const;
+    void setAttackProbability(const AttackProbability& attackProbability);
 
-    const Damage &damage() const;
-    void setDamage(const Damage &damage);
+    const Damage& damage() const;
+    void setDamage(const Damage& damage);
 
     int defencePercentage() const;
     void setDefencePercentage(int defencePercentage);

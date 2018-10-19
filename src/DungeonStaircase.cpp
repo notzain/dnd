@@ -1,4 +1,5 @@
 #include "DungeonStaircase.h"
+#include "Hero.h"
 
 #include <iostream>
 
@@ -15,6 +16,21 @@ void DungeonStaircase::visit()
 {
     m_isVisited = true;
     std::cout << "You find a staircase going " << (m_goesUp ? "up" : "down") << '\n';
+
+    char input = 0;
+    while (input != 'y' && input != 'n') {
+        std::cout << "Will you take the staircase? (y/n) ";
+        std::cin >> input;
+        std::cin.ignore(1000, '\n');
+
+        if (input == 'y') {
+            if (!m_goesUp) {
+                m_parentLayer.nextLayer();
+            } else {
+                m_parentLayer.prevLayer();
+            }
+        }
+    }
 }
 
 void DungeonStaircase::printSymbol(std::ostream& str)
@@ -23,7 +39,7 @@ void DungeonStaircase::printSymbol(std::ostream& str)
         str << "P";
     } else {
         const char* room = isVisited() ? (m_goesUp ? "H" : "L") : ".";
-        str << room;
+        str << (m_goesUp ? "H" : "L");
     }
 }
 

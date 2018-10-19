@@ -14,21 +14,21 @@ bool TravelSystem::travel(char direction, Hero& hero, DungeonLayer& layer)
     switch (direction) {
     case 'd': {
         if (hero.y() + 1 > layer.config().height - 1) {
-            std::cout << "You have hit a wall.";
+            std::cout << "You have hit a wall.\n";
         } else {
             hero.setY(hero.y() + 1);
         }
     } break;
     case 'w': {
         if (hero.x() - 1 < 0) {
-            std::cout << "You have hit a wall.";
+            std::cout << "You have hit a wall.\n";
         } else {
             hero.setX(hero.x() - 1);
         }
     } break;
     case 'a': {
         if (hero.y() - 1 < 0) {
-            std::cout << "You have hit a wall.";
+            std::cout << "You have hit a wall.\n";
         } else {
             hero.setY(hero.y() - 1);
         }
@@ -36,7 +36,7 @@ bool TravelSystem::travel(char direction, Hero& hero, DungeonLayer& layer)
     } break;
     case 's': {
         if (hero.x() + 1 > layer.config().width - 1) {
-            std::cout << "You have hit a wall.";
+            std::cout << "You have hit a wall.\n";
         } else {
             hero.setX(hero.x() + 1);
         }
@@ -46,5 +46,6 @@ bool TravelSystem::travel(char direction, Hero& hero, DungeonLayer& layer)
         return false;
     }
     layer.visit(hero.x(), hero.y());
+    system("cls");
     return true;
 }

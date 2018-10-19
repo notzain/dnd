@@ -15,13 +15,14 @@ FightSystem& FightSystem::instance()
 void FightSystem::fight(Hero& hero, Monster& monster, DungeonLayer& layer)
 {
     std::cout << "You face a monster!\n";
+    int monsterHp = monster.hitpoints();
 
-    while (hero.hitpoints() > 0 && monster.hitpoints() > 0) {
+    while (hero.hitpoints() > 0 && monsterHp > 0) {
         std::cout << "\n\n";
         std::cout << hero.name() << " | "
                   << "hp: " << hero.hitpoints() << "\n";
         std::cout << monster.name() << " | "
-                  << "hp: " << monster.hitpoints() << "\n\n";
+                  << "hp: " << monsterHp << "\n\n";
 
         char choice = '0';
         while (choice <= '0' || choice >= '4') {
@@ -34,7 +35,7 @@ void FightSystem::fight(Hero& hero, Monster& monster, DungeonLayer& layer)
         case '1': {
             int heroAttack = hero.attack();
             std::cout << "You hit the monster for " << heroAttack << "dmg\n";
-            monster.setHitpoints(monster.hitpoints() - heroAttack);
+            monsterHp =- heroAttack;
 
             for (int i = 0; i < monster.attackProbability().hitRepeats; ++i) {
                 if ((RNG::generate(0, 100) < monster.attackProbability().hitPercentage)) {
@@ -53,6 +54,7 @@ void FightSystem::fight(Hero& hero, Monster& monster, DungeonLayer& layer)
             // 50% chance to run
             if (RNG::generate(0, 1) == 0) {
                 TravelSystem::instance().travel(input, hero, layer);
+                std::cout << "\n\n\n";
                 return;
             }
             std::cout << "You failed to run away.\n\n";

@@ -11,9 +11,13 @@ MonsterReader::MonsterReader()
 
 MonsterArray* MonsterReader::createFromFile(const char* filename)
 {
-    std::ifstream fileStream(filename);
-    if (!fileStream.is_open())
-        throw std::runtime_error("Could not read file.");
+    std::ifstream fileStream;
+    fileStream.exceptions(std::ifstream::failbit);
+    try {
+        fileStream.open(filename);
+    } catch (const std::exception& e) {
+        throw e;
+    }
 
     m_monsters->length = static_cast<size_t>(std::count(
         std::istreambuf_iterator<char>(fileStream),

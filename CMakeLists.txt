@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.10)
 project(dnd)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
 add_executable(dnd
         src/Dungeon.cpp
@@ -29,4 +30,16 @@ add_executable(dnd
         src/RNG.cpp
         src/RNG.h
         src/main.cpp
-        src/FightSystem.cpp src/FightSystem.h src/InventorySystem.cpp src/InventorySystem.h src/RustySword.cpp src/RustySword.h src/KnightSword.cpp src/KnightSword.h src/TravelSystem.cpp src/TravelSystem.h)
+        src/FightSystem.cpp
+		src/FightSystem.h
+		src/InventorySystem.cpp
+		src/InventorySystem.h
+		src/RustySword.cpp
+		src/RustySword.h
+		src/KnightSword.cpp 
+		src/KnightSword.h
+		src/TravelSystem.cpp 
+		src/TravelSystem.h
+		src/RestSystem.cpp 
+		src/RestSystem.h
+		)
