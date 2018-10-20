@@ -42,4 +42,4 @@ add_executable(dnd
 		src/TravelSystem.h
 		src/RestSystem.cpp 
 		src/RestSystem.h
-        src/ExperienceSystem.cpp src/ExperienceSystem.h)
+        src/ExperienceSystem.cpp src/ExperienceSystem.h src/HolyScroll.cpp src/HolyScroll.h src/Potion.cpp src/Potion.h src/BlessedPotion.cpp src/BlessedPotion.h)

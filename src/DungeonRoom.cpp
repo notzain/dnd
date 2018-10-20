@@ -2,7 +2,9 @@
 #include "Dungeon.h"
 #include "DungeonLayer.h"
 #include "FightSystem.h"
+#include "InventorySystem.h"
 #include "RNG.h"
+
 #include <iostream>
 
 const char* SizeDescriptions[] = {
@@ -48,8 +50,11 @@ void DungeonRoom::visit()
     std::cout << "You enter a room.\n"
               << description() << "\n\n";
 
+    InventorySystem::instance().giveRandomItem(m_parentLayer.hero());
+
     if (!m_isVisited) {
         m_isVisited = true;
+        return;
 
         int monstersToFight = RNG::generate(1, 4);
         if (monstersToFight == 1) {

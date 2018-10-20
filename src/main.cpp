@@ -21,15 +21,14 @@ int main()
     auto* config = new DungeonConfiguration{
         /* int width; */ 10,
         /* int height; */ 10,
-        /* int layers; */ 3,
+        /* int layers; */ 1,
         /* MonsterArray* monsters; */ monsterArray
     };
 
-    Hero hero("Zain", 1, 100, 0, 30, 30);
+    Hero hero("Zain", 1, 100, 0, 200, 30);
     hero.inventory().addItem(new RustySword());
 
     Dungeon dungeon(config, hero);
-
     Game game(dungeon, hero);
     game.play();
 

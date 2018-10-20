@@ -73,6 +73,20 @@ struct MonsterArray {
         delete[] array;
     }
 
+    Monster* randomMonsterWithLevel(int level)
+    {
+        auto* firstMonster = *std::find_if(array, array + length, [&](const Monster* monster) {
+            return static_cast<int>(monster->level()) == level;
+        });
+        auto end = std::find_if(std::reverse_iterator<Monster**>(array + length), std::reverse_iterator<Monster**>(array), [&](const Monster* monster) {
+            return static_cast<int>(monster->level()) == level;
+        });
+        auto* lastMonster = *end;
+
+        auto* monster = firstMonster + RNG::generate(0, (lastMonster - firstMonster));
+        return monster;
+    }
+
     Monster* randomMonsterInRange(int minLevel, int maxLevel)
     {
         auto* lowestMonster = std::find_if(array, array + length, [&](const Monster* monster) {

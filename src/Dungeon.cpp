@@ -23,6 +23,8 @@ Dungeon::~Dungeon()
         delete m_layers[i];
     }
     delete[] m_layers;
+    delete m_config->monsters;
+    delete m_config;
 }
 
 void Dungeon::generateLayers()

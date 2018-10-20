@@ -24,14 +24,15 @@ Item* Inventory::getItem(std::size_t index) const
     return m_items[index];
 }
 
-void Inventory::addItem(Item* item)
+bool Inventory::addItem(Item* item)
 {
     for (auto &m_item : m_items) {
         if (m_item == nullptr) {
             m_item = item;
-            break;
+            return true;
         }
     }
+    return false;
 }
 
 void Inventory::removeItem(Item* item)

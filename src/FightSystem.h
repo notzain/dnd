@@ -16,6 +16,7 @@ class FightSystem {
 
 public:
     static FightSystem& instance();
+    void fightBoss(Hero& hero, Monster& monster, DungeonLayer& layer);
     void fight(Hero& hero, Monster& monster, DungeonLayer& layer);
     void fight(Hero& hero, Monster** monster, std::size_t numMonsters, DungeonLayer& layer);
 };

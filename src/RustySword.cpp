@@ -32,5 +32,5 @@ bool RustySword::use(Monster& monster)
 {
     std::cout << "You throw the sword at the monster and pick it up again. It does 1 damage.\n";
     monster.setHitpoints(monster.hitpoints() - 1);
-    return true;
+    return false;
 }

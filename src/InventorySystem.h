@@ -13,6 +13,7 @@ class InventorySystem {
 
 public:
     static InventorySystem& instance();
+    void giveRandomItem(Hero& hero);
     void use(Hero& hero, Monster& monster);
     void use(Hero& hero);
 };

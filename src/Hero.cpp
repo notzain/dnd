@@ -49,6 +49,9 @@ int Hero::hitpoints() const
 void Hero::setHitpoints(int hitpoints)
 {
     m_hitpoints = hitpoints;
+    if (m_hitpoints > MAX_HP) {
+        m_hitpoints = MAX_HP;
+    }
 }
 
 int Hero::exp() const

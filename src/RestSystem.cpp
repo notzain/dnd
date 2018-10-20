@@ -17,9 +17,12 @@ RestSystem& RestSystem::instance()
 void RestSystem::rest(Hero& hero, DungeonLayer& layer)
 {
     std::cout << "You take a short break.\n";
-    int heal = RNG::generate(9, 16);
+    const int heal = RNG::generate(9, 16);
+    std::cout << "You heal for " << heal << "hp.\n";
+    hero.setHitpoints(hero.hitpoints() + heal);
     // 40% chance to fight enemy
-    if (RNG::generate(0, 100) > 60) {
+    if (RNG::generate(0, 100) < 40) {
+        std::cout << "You encounter a monster.\n";
         auto* monster = layer.config().monsters->randomMonsterInRange(
             layer.config().minEnemyLevel,
             layer.config().maxEnemyLevel);

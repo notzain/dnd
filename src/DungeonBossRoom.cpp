@@ -1,4 +1,6 @@
 #include "DungeonBossRoom.h"
+#include "Dungeon.h"
+#include "FightSystem.h"
 #include "Hero.h"
 
 #include <iostream>
@@ -12,6 +14,12 @@ DungeonBossRoom::DungeonBossRoom(DungeonLayer& parentLayer, int x, int y)
 
 void DungeonBossRoom::visit()
 {
+    std::cout << "You enter a room.\n"
+              << description() << "\n\n";
+    std::cout << "There is no escape.\n";
+
+    auto* boss = m_parentLayer.config().monsters->randomMonsterWithLevel(static_cast<int>(Level::BOSS));
+    FightSystem::instance().fightBoss(m_parentLayer.hero(), *boss, m_parentLayer);
 }
 
 void DungeonBossRoom::printSymbol(std::ostream& str)

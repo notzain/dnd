@@ -31,5 +31,5 @@ bool KnightSword::use(Monster& monster)
 {
     std::cout << "You throw the sword at the monster and pick it up again. It does 3 damage.\n";
     monster.setHitpoints(monster.hitpoints() - 3);
-    return true;
+    return false;
 }

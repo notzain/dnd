@@ -4,6 +4,8 @@
 #include "Inventory.h"
 
 class Hero {
+    static const int MAX_HP = 100;
+
     char* m_name;
     int m_level;
     int m_hitpoints;

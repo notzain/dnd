@@ -11,7 +11,7 @@ class Inventory {
 public:
     Inventory();
     virtual ~Inventory();
-    void addItem(Item* item);
+    bool addItem(Item* item);
     Item* getItem(std::size_t index) const;
     void removeItem(Item* item);
 

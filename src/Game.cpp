@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "RestSystem.h"
 #include "TravelSystem.h"
+#include "InventorySystem.h"
 #include <iostream>
 
 Game::Game(Dungeon& dungeon, Hero& hero)
@@ -19,6 +20,7 @@ void Game::play()
                   << "q : Quit\n"
                   << "m : Show map\n"
                   << "r : Rest\n"
+                  << "i : Inventory\n"
                   << "w/a/s/d : Move\n";
 
         char input;
@@ -50,6 +52,9 @@ void Game::play()
                 << "Exp: " << m_hero.exp() << "\n"
                 << "Attack: " << m_hero.attack() << "\n"
                 << "Defence: " << m_hero.defence() << "\n";
+        } break;
+        case 'i': {
+            InventorySystem::instance().use(m_hero);
         } break;
         case 'x': {
             TravelSystem::instance().shuffle(m_dungeon.activeLayer());
