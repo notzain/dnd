@@ -20,14 +20,10 @@ void RestSystem::rest(Hero& hero, DungeonLayer& layer)
     int heal = RNG::generate(9, 16);
     // 40% chance to fight enemy
     if (RNG::generate(0, 100) > 60) {
-        auto* lowestMonster = std::find_if(layer.config().monsters->array, layer.config().monsters->array + layer.config().monsters->length, [&](const Monster* monster) {
-            return static_cast<int>(monster->level()) == layer.config().minEnemyLevel;
-        });
-        auto* highestMonster = std::find_if(layer.config().monsters->array, layer.config().monsters->array + layer.config().monsters->length, [&](const Monster* monster) {
-            return static_cast<int>(monster->level()) == layer.config().maxEnemyLevel;
-        });
+        auto* monster = layer.config().monsters->randomMonsterInRange(
+            layer.config().minEnemyLevel,
+            layer.config().maxEnemyLevel);
 
-        auto* monster = lowestMonster + RNG::generate(0, (highestMonster - lowestMonster));
-        FightSystem::instance().fight(hero, **monster, layer);
+        FightSystem::instance().fight(hero, *monster, layer);
     }
 }

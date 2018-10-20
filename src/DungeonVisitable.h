@@ -23,6 +23,11 @@ public:
         strcpy(m_description, description);
     }
 
+    virtual ~DungeonVisitable()
+    {
+        delete[] m_description;
+    }
+
     int x() const
     {
         return m_x;
@@ -41,11 +46,6 @@ public:
     void setY(int y)
     {
         m_y = y;
-    }
-
-    virtual ~DungeonVisitable()
-    {
-        delete[] m_description;
     }
 
     const char* description() const

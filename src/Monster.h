@@ -1,7 +1,8 @@
 #ifndef DND_MONSTER_H
 #define DND_MONSTER_H
 
-#include <iosfwd>
+#include "RNG.h"
+#include <algorithm>
 
 struct AttackProbability {
     int hitPercentage;
@@ -70,6 +71,19 @@ struct MonsterArray {
             delete array[i];
         }
         delete[] array;
+    }
+
+    Monster* randomMonsterInRange(int minLevel, int maxLevel)
+    {
+        auto* lowestMonster = std::find_if(array, array + length, [&](const Monster* monster) {
+            return static_cast<int>(monster->level()) == minLevel;
+        });
+        auto* highestMonster = std::find_if(array, array + length, [&](const Monster* monster) {
+            return static_cast<int>(monster->level()) == maxLevel;
+        });
+
+        auto* monster = lowestMonster + RNG::generate(0, (highestMonster - lowestMonster));
+        return *monster;
     }
 };
 

@@ -23,6 +23,7 @@ DungeonLayer::DungeonLayer(DungeonLayerConfiguration* configuration, Hero& hero,
             m_visitables[i][j] = new DungeonRoom(*this, i, j);
         }
     }
+
     generateLayer();
 
     int x;

@@ -1,7 +1,7 @@
 #include "DungeonRoom.h"
-#include "FightSystem.h"
-#include "DungeonLayer.h"
 #include "Dungeon.h"
+#include "DungeonLayer.h"
+#include "FightSystem.h"
 #include "RNG.h"
 #include <iostream>
 
@@ -50,15 +50,30 @@ void DungeonRoom::visit()
 
     if (!m_isVisited) {
         m_isVisited = true;
-        auto* monster = m_parentLayer.config().monsters->array[RNG::generate(0,
-            static_cast<int>(m_parentLayer.config().monsters->length - 1))];
-        //FightSystem::instance().fight(m_parentLayer.hero(), *monster, m_parentLayer);
+
+        int monstersToFight = RNG::generate(1, 4);
+        if (monstersToFight == 1) {
+            auto* monster = m_parentLayer.config().monsters->randomMonsterInRange(
+                m_parentLayer.config().minEnemyLevel,
+                m_parentLayer.config().maxEnemyLevel);
+            FightSystem::instance().fight(m_parentLayer.hero(), *monster, m_parentLayer);
+        } else {
+            auto** monsters = new Monster*[monstersToFight];
+            for (int i = 0; i < monstersToFight; ++i) {
+                monsters[i] = m_parentLayer.config().monsters->randomMonsterInRange(
+                    m_parentLayer.config().minEnemyLevel,
+                    m_parentLayer.config().maxEnemyLevel);
+            }
+            FightSystem::instance().fight(m_parentLayer.hero(), monsters, monstersToFight, m_parentLayer);
+            delete[] monsters;
+        }
     } else {
         int chance = RNG::generate(0, 100);
         // 30% chance to fight monster on re-entering room
         if (chance < 30) {
-            auto* monster = m_parentLayer.config().monsters->array[RNG::generate(0,
-                static_cast<int>(m_parentLayer.config().monsters->length - 1))];
+            auto* monster = m_parentLayer.config().monsters->randomMonsterInRange(
+                m_parentLayer.config().minEnemyLevel,
+                m_parentLayer.config().maxEnemyLevel);
             FightSystem::instance().fight(m_parentLayer.hero(), *monster, m_parentLayer);
         }
     }
