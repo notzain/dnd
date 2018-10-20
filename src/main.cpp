@@ -19,7 +19,7 @@ int main()
         return EXIT_FAILURE;
     }
     auto* config = new DungeonConfiguration{
-        /* int width; */ 10,
+        /* int width; */ 5,
         /* int height; */ 10,
         /* int layers; */ 1,
         /* MonsterArray* monsters; */ monsterArray

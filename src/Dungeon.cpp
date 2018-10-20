@@ -37,8 +37,8 @@ void Dungeon::generateLayers()
         const int stairsDown = (i != m_config->layers - 1);
 
         auto* layerConfig = new DungeonLayerConfiguration{
-            /*.width =*/m_config->width,
-            /*.height =*/m_config->height,
+            /*.width =*/m_config->height,
+            /*.height =*/m_config->width,
 
             /*.numStairsUp =*/stairsUp,
             /*.numStairsDown = */ stairsDown,
