@@ -6,8 +6,6 @@
 
 class DungeonStaircase : public DungeonVisitable {
     DungeonLayer& m_parentLayer;
-    int m_x;
-    int m_y;
     bool m_goesUp;
 
 public:

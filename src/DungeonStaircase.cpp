@@ -4,10 +4,8 @@
 #include <iostream>
 
 DungeonStaircase::DungeonStaircase(DungeonLayer& parentLayer, int x, int y, bool goesUp)
-    : DungeonVisitable(goesUp ? "You find a stairway going up." : "You find a stairway going down.")
+    : DungeonVisitable(goesUp ? "You find a stairway going up." : "You find a stairway going down.", x, y)
     , m_parentLayer(parentLayer)
-    , m_x(x)
-    , m_y(y)
     , m_goesUp(goesUp)
 {
 }

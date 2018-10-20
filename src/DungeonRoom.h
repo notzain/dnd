@@ -6,8 +6,6 @@
 
 class DungeonRoom : public DungeonVisitable {
     DungeonLayer& m_parentLayer;
-    int m_x,
-        m_y;
 
 public:
     explicit DungeonRoom(DungeonLayer& parentLayer, int x, int y);
@@ -15,10 +13,9 @@ public:
 
     void visit() override;
 
+
     void printSymbol(std::ostream &str) override;
-
     void printHorizontalNeighbour(std::ostream &str) override;
-
     void printVerticalNeighbour(std::ostream &str) override;
 
 };

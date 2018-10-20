@@ -36,10 +36,8 @@ static const char* makeDescription()
 }
 
 DungeonRoom::DungeonRoom(DungeonLayer& parentLayer, int x, int y)
-    : DungeonVisitable(makeDescription())
+    : DungeonVisitable(makeDescription(), x, y)
     , m_parentLayer(parentLayer)
-    , m_x(x)
-    , m_y(y)
 {
 }
 
@@ -72,7 +70,7 @@ void DungeonRoom::printSymbol(std::ostream& str)
         str << "P";
     } else {
         const char* room = (isVisited() ? "N" : ".");
-        str << "N";
+        str << room;
     }
 }
 

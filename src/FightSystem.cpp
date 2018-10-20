@@ -4,6 +4,7 @@
 #include "RNG.h"
 #include "TravelSystem.h"
 #include "InventorySystem.h"
+#include "ExperienceSystem.h"
 #include <iostream>
 
 FightSystem& FightSystem::instance()
@@ -35,13 +36,15 @@ void FightSystem::fight(Hero& hero, Monster& monster, DungeonLayer& layer)
         case '1': {
             int heroAttack = hero.attack();
             std::cout << "You hit the monster for " << heroAttack << "dmg\n";
-            monsterHp =- heroAttack;
+            monsterHp -= heroAttack;
 
             for (int i = 0; i < monster.attackProbability().hitRepeats; ++i) {
-                if ((RNG::generate(0, 100) < monster.attackProbability().hitPercentage)) {
+                if ((RNG::generate(0, 100) < monster.attackProbability().hitPercentage - hero.defence())) {
                     int monsterAttack = RNG::generate(monster.damage().minimum, monster.damage().maximum);
                     std::cout << "You get hit for " << monsterAttack << " damage.\n";
                     hero.setHitpoints(hero.hitpoints() - monsterAttack);
+                } else {
+                    std::cout << monster.name() << " tries to attack but misses.\n";
                 }
             }
         } break;
@@ -65,6 +68,10 @@ void FightSystem::fight(Hero& hero, Monster& monster, DungeonLayer& layer)
         default:
             break;
         }
+    }
+    if (monsterHp <= 0) {
+        std::cout << "You've killed " << monster.name() << "\n";
+        ExperienceSystem::instance().addExperience(hero, monster);
     }
 }
 

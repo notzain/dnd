@@ -4,11 +4,9 @@
 #include <iostream>
 
 DungeonBossRoom::DungeonBossRoom(DungeonLayer& parentLayer, int x, int y)
-    : DungeonVisitable("You confront a terrifying monster!")
+    : DungeonVisitable("You confront a terrifying monster!", x, y)
     , m_parentLayer(parentLayer)
     , m_isVisited(false)
-    , m_x(x)
-    , m_y(y)
 {
 }
 

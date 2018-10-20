@@ -25,7 +25,7 @@ int main()
         /* MonsterArray* monsters; */ monsterArray
     };
 
-    Hero hero("Zain", 0, 100, 0, 30, 30);
+    Hero hero("Zain", 1, 100, 0, 30, 30);
     hero.inventory().addItem(new RustySword());
 
     Dungeon dungeon(config, hero);

@@ -14,4 +14,5 @@ class TravelSystem {
 public:
     static TravelSystem& instance();
     bool travel(char direction, Hero& hero, DungeonLayer& layer);
+    void shuffle(DungeonLayer& layer);
 };

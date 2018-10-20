@@ -1,7 +1,7 @@
 #include "Game.h"
+#include "RestSystem.h"
 #include "TravelSystem.h"
 #include <iostream>
-#include "RestSystem.h"
 
 Game::Game(Dungeon& dungeon, Hero& hero)
     : m_dungeon(dungeon)
@@ -42,6 +42,18 @@ void Game::play()
         case 'r': {
             RestSystem::instance().rest(m_hero, m_dungeon.activeLayer());
         } break;
+        case 'p': {
+            system("cls");
+            std::cout
+                << "HP: " << m_hero.hitpoints() << "\n"
+                << "Level: " << m_hero.level() << "\n"
+                << "Exp: " << m_hero.exp() << "\n"
+                << "Attack: " << m_hero.attack() << "\n"
+                << "Defence: " << m_hero.defence() << "\n";
+        } break;
+        case 'x': {
+            TravelSystem::instance().shuffle(m_dungeon.activeLayer());
+        } break;
         case 'w':
         case 'a':
         case 's':
@@ -61,8 +73,7 @@ void Game::play()
             return;
         }
 
-        if (m_dungeon.isCleared()) 
-        {
+        if (m_dungeon.isCleared()) {
             std::cin.get();
             return;
         }
