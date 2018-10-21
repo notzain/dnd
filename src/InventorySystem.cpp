@@ -112,7 +112,7 @@ void InventorySystem::use(Hero& hero, Monster** monsters, int numMonsters)
                 }
                 std::cout << "What monster do you want to use it on? ";
                 char input = 0;
-                while ((input < '0' || input > numMonsters + '0')) {
+                while ((input < '0' || input > numMonsters - 1 + '0')) {
                     std::cin >> input;
                     std::cin.ignore(1000, '\n');
                 }
