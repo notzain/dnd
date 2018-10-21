@@ -116,7 +116,9 @@ void SaveSystem::load(Hero& hero, const char* filename)
 
         hero.setName(name);
         hero.setLevel(level);
-        hero.setHitpoints(hitpoints);
+        // if HP is 0, hero has died. reset to 100
+        // else, hero is still in a run. use prev hitpoints
+        hero.setHitpoints(hitpoints <= 0 ? 100 : hitpoints);
         hero.setExp(exp);
         hero.setAttack(attack);
         hero.setDefence(defence);

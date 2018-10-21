@@ -1,8 +1,8 @@
 #include "Game.h"
 #include "InventorySystem.h"
 #include "RestSystem.h"
-#include "TravelSystem.h"
 #include "SaveSystem.h"
+#include "TravelSystem.h"
 #include <iostream>
 
 Game::Game(Dungeon& dungeon, Hero& hero)
@@ -16,7 +16,8 @@ Game::Game(Dungeon& dungeon, Hero& hero)
 
 void Game::play()
 {
-    while (true) {
+    bool quit = false;
+    while (!quit) {
         std::cout << "Options:\n"
                   << "q : Quit\n"
                   << "m : Show map\n"
@@ -30,7 +31,7 @@ void Game::play()
 
         switch (input) {
         case 'q':
-            return;
+            quit = true;
         case 'm': {
             system("cls");
             m_dungeon.activeLayer().print();
@@ -77,24 +78,23 @@ void Game::play()
 
         if (m_hero.hitpoints() <= 0) {
             std::cout << "You've died.\n";
-            return;
+            quit = true;
         }
 
         if (m_dungeon.isCleared()) {
-            std::cout << "You cleared the dungeon!\n"
-                      << "Do you want to save your hero? (y/n)";
-            char input = 0;
-
-            while (!(input == 'y' || input == 'n')) {
-                std::cin >> input;
-                std::cin.ignore(1000, '\n');
-            }
-
-            if (input == 'y') {
-                SaveSystem::instance().save(m_hero, "../hero.txt");
-            }
-
-            return;
+            std::cout << "You cleared the dungeon!\n";
+            quit = true;
         }
+    }
+
+    std::cout << "\n\nDo you want to save your hero? (y/n) ";
+    char save = 0;
+    while (!(save == 'y' || save == 'n')) {
+        std::cin >> save;
+        std::cin.ignore(1000, '\n');
+    }
+
+    if (save == 'y') {
+        SaveSystem::instance().save(m_hero, "../hero.txt");
     }
 }

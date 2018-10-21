@@ -15,6 +15,7 @@ public:
     static InventorySystem& instance();
     void giveRandomItem(Hero& hero);
     void use(Hero& hero, Monster& monster);
+    void use(Hero& hero, Monster** monsters, int numMonsters);
     void use(Hero& hero);
 };
 

@@ -170,6 +170,7 @@ void FightSystem::fight(Hero& hero, Monster** monsters, std::size_t numMonsters,
             std::cout << "You failed to run away.\n\n";
         } break;
         case '3': {
+            InventorySystem::instance().use(hero, monsters, numMonsters);
         } break;
         default:
             break;
