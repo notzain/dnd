@@ -54,7 +54,6 @@ void DungeonRoom::visit()
 
     if (!m_isVisited) {
         m_isVisited = true;
-        return;
 
         int monstersToFight = RNG::generate(1, 4);
         if (monstersToFight == 1) {
@@ -107,7 +106,7 @@ void DungeonRoom::printHorizontalNeighbour(std::ostream& str)
 void DungeonRoom::printVerticalNeighbour(std::ostream& str)
 {
     bool hallwayDownVisited = false;
-    if (m_x + 1 < m_parentLayer.config().height) {
+    if (m_x + 1 < m_parentLayer.config().width) {
         hallwayDownVisited = isVisited() && m_parentLayer.visitables()[m_x + 1][m_y]->isVisited();
     }
     const char* downHall = hallwayDownVisited ? "|  " : "   ";

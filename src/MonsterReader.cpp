@@ -16,6 +16,7 @@ MonsterArray* MonsterReader::createFromFile(const char* filename)
     try {
         fileStream.open(filename);
     } catch (const std::exception& e) {
+        std::cerr << "Could not open file " << filename << "\n";
         throw e;
     }
 
@@ -35,7 +36,7 @@ MonsterArray* MonsterReader::createFromFile(const char* filename)
             char name[32];
             char level[8];
             AttackProbability attackProbability{};
-            Damage damage;
+            Damage damage{};
             int defencePercentage;
             int hitpoints;
 

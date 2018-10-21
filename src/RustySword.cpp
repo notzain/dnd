@@ -6,7 +6,6 @@
 
 RustySword::RustySword()
     : Item("Rusty Sword")
-    , m_isEquipped(false)
 {
 }
 const char* RustySword::description()

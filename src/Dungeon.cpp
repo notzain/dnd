@@ -3,7 +3,7 @@
 #include <stdexcept>
 #include <iostream>
 
-Dungeon::Dungeon(DungeonConfiguration* configuration, Hero& hero)
+Dungeon::Dungeon(DungeonConfiguration* configuration, Hero* hero)
     : m_config(configuration)
     , m_hero(hero)
     , m_activeLayer(0)
@@ -25,6 +25,7 @@ Dungeon::~Dungeon()
     delete[] m_layers;
     delete m_config->monsters;
     delete m_config;
+    delete m_hero;
 }
 
 void Dungeon::generateLayers()
@@ -50,7 +51,7 @@ void Dungeon::generateLayers()
             /*.monsters =*/m_config->monsters
         };
 
-        m_layers[i] = new DungeonLayer(layerConfig, m_hero, *this);
+        m_layers[i] = new DungeonLayer(layerConfig, *m_hero, *this);
     }
 }
 
@@ -68,7 +69,6 @@ void Dungeon::nextLayer()
 {
     m_activeLayer++;
     if (m_activeLayer == m_config->layers) {
-        std::cout << "You've cleared the dungeon!\n";
         m_isCleared = true;
         return;
     }
@@ -76,8 +76,8 @@ void Dungeon::nextLayer()
         for (int j = 0; j < activeLayer().config().height; ++j) {
             if (auto* room = dynamic_cast<DungeonStaircase*>(activeLayer().visitables()[i][j])) {
                 if (room->goesUp()) {
-                    m_hero.setX(i);
-                    m_hero.setY(j);
+                    m_hero->setX(i);
+                    m_hero->setY(j);
                     return;
                 }
             }
@@ -89,7 +89,6 @@ void Dungeon::prevLayer()
 {
     m_activeLayer--;
     if (m_activeLayer < 0) {
-        std::cout << "You fled from the dungeon like a wimp.\n";
         m_isCleared = true;
         return;
     }
@@ -97,8 +96,8 @@ void Dungeon::prevLayer()
         for (int j = 0; j < activeLayer().config().height; ++j) {
             if (auto* room = dynamic_cast<DungeonStaircase*>(activeLayer().visitables()[i][j])) {
                 if (!room->goesUp()) {
-                    m_hero.setX(i);
-                    m_hero.setY(j);
+                    m_hero->setX(i);
+                    m_hero->setY(j);
                     return;
                 }
             }

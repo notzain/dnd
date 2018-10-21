@@ -3,6 +3,7 @@
 
 #include "RNG.h"
 #include <algorithm>
+#include <iterator>
 
 struct AttackProbability {
     int hitPercentage;
@@ -65,40 +66,9 @@ struct MonsterArray {
     Monster** array{};
     std::size_t length{};
 
-    virtual ~MonsterArray()
-    {
-        for (int i = 0; i < length; ++i) {
-            delete array[i];
-        }
-        delete[] array;
-    }
-
-    Monster* randomMonsterWithLevel(int level)
-    {
-        auto* firstMonster = *std::find_if(array, array + length, [&](const Monster* monster) {
-            return static_cast<int>(monster->level()) == level;
-        });
-        auto end = std::find_if(std::reverse_iterator<Monster**>(array + length), std::reverse_iterator<Monster**>(array), [&](const Monster* monster) {
-            return static_cast<int>(monster->level()) == level;
-        });
-        auto* lastMonster = *end;
-
-        auto* monster = firstMonster + RNG::generate(0, (lastMonster - firstMonster));
-        return monster;
-    }
-
-    Monster* randomMonsterInRange(int minLevel, int maxLevel)
-    {
-        auto* lowestMonster = std::find_if(array, array + length, [&](const Monster* monster) {
-            return static_cast<int>(monster->level()) == minLevel;
-        });
-        auto* highestMonster = std::find_if(array, array + length, [&](const Monster* monster) {
-            return static_cast<int>(monster->level()) == maxLevel;
-        });
-
-        auto* monster = lowestMonster + RNG::generate(0, (highestMonster - lowestMonster));
-        return *monster;
-    }
+    virtual ~MonsterArray();
+    Monster* randomMonsterWithLevel(int level);
+    Monster* randomMonsterInRange(int minLevel, int maxLevel);
 };
 
 #endif // DND_MONSTER_H

@@ -84,3 +84,48 @@ void Monster::setHitpoints(int hitpoints)
 {
     m_hitpoints = hitpoints;
 }
+
+Monster* MonsterArray::randomMonsterWithLevel(int level)
+{
+    auto* firstMonster = *std::find_if(
+        array,
+        array + length,
+        [&](const Monster* monster) {
+            return static_cast<int>(monster->level()) == level;
+        });
+
+    auto* lastMonster = *std::find_if(
+        std::reverse_iterator<Monster**>(array + length),
+        std::reverse_iterator<Monster**>(array),
+        [&](const Monster* monster) {
+            return static_cast<int>(monster->level()) == level;
+        });
+
+    // black magic /2 -> something with pointer arithmatic
+    const int begin = static_cast<int>(std::distance(*array, firstMonster)) / 2;
+    const int end = static_cast<int>(std::distance(*array, lastMonster)) / 2;
+
+    auto* monster = array[RNG::generate(begin, end)];
+    return monster;
+}
+
+Monster* MonsterArray::randomMonsterInRange(int minLevel, int maxLevel)
+{
+    auto* lowestMonster = std::find_if(array, array + length, [&](const Monster* monster) {
+        return static_cast<int>(monster->level()) == minLevel;
+    });
+    auto* highestMonster = std::find_if(array, array + length, [&](const Monster* monster) {
+        return static_cast<int>(monster->level()) == maxLevel;
+    });
+
+    auto* monster = lowestMonster + RNG::generate(0, (highestMonster - lowestMonster));
+    return *monster;
+}
+
+MonsterArray::~MonsterArray()
+{
+    for (int i = 0; i < length; ++i) {
+        delete array[i];
+    }
+    delete[] array;
+}

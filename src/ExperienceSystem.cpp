@@ -4,10 +4,10 @@
 #include <iostream>
 
 const static int EXP_TILL_NEXT_LEVEL[] = {
-    50,
+    10,
+    100,
     200,
-    500,
-    1000
+    500
 };
 
 const static int MONSTER_LEVEL_TO_EXP(const Level& level)

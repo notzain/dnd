@@ -9,9 +9,13 @@ class Monster;
 class Item {
     char* m_name{};
 
+protected:
+    bool m_isEquipped;
+
 public:
-    Item(const char* name)
+    explicit Item(const char* name)
         : m_name(nullptr)
+        , m_isEquipped(false)
     {
         setName(name);
     }
@@ -35,9 +39,14 @@ public:
         strcpy(m_name, name);
     }
 
+    bool isEquipped() const
+    {
+        return m_isEquipped;
+    }
+
     virtual const char* description() = 0;
-    virtual bool use(Hero &hero) = 0;
-    virtual bool use(Monster &monster) = 0;
+    virtual bool use(Hero& hero) = 0;
+    virtual bool use(Monster& monster) = 0;
 };
 
 #endif //DND_ITEM_H

@@ -15,12 +15,12 @@ struct DungeonConfiguration {
 class Dungeon {
     DungeonConfiguration* m_config;
     DungeonLayer** m_layers;
-    Hero& m_hero;
+    Hero* m_hero;
     int m_activeLayer;
     bool m_isCleared;
 
 public:
-    Dungeon(DungeonConfiguration* configuration, Hero& hero);
+    Dungeon(DungeonConfiguration* configuration, Hero* hero);
     virtual ~Dungeon();
 
     void nextLayer();

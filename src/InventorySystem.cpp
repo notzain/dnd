@@ -43,13 +43,13 @@ void InventorySystem::use(Hero& hero, Monster& monster)
         std::cin.ignore(1000, '\n');
         std::cout << "\n";
 
-        char self = 0;
-        std::cout << "Use on self? (y/n)";
-        std::cin >> self;
-        std::cin.ignore(1000, '\n');
-
         auto* item = hero.inventory().getItem(choice - '0');
         if (item != nullptr) {
+            char self = 0;
+            std::cout << "Use on self? (y/n)";
+            std::cin >> self;
+            std::cin.ignore(1000, '\n');
+
             if (self == 'y') {
                 if (item->use(hero)) {
                     std::cout << "The item becomes unusable.\n";
@@ -61,6 +61,8 @@ void InventorySystem::use(Hero& hero, Monster& monster)
                     hero.inventory().removeItem(item);
                 };
             }
+        } else {
+            std::cout << "There is no item like that!\n";
         }
     }
 }
@@ -107,6 +109,7 @@ void InventorySystem::use(Hero& hero)
 
         auto* item = hero.inventory().getItem(choice - '0');
         if (item != nullptr) {
+            std::cout << "You drop the item.\n";
             hero.inventory().removeItem(item);
         }
 

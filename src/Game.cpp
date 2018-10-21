@@ -1,7 +1,8 @@
 #include "Game.h"
+#include "InventorySystem.h"
 #include "RestSystem.h"
 #include "TravelSystem.h"
-#include "InventorySystem.h"
+#include "SaveSystem.h"
 #include <iostream>
 
 Game::Game(Dungeon& dungeon, Hero& hero)
@@ -47,6 +48,7 @@ void Game::play()
         case 'p': {
             system("cls");
             std::cout
+                << "Name: " << m_hero.name() << "\n"
                 << "HP: " << m_hero.hitpoints() << "\n"
                 << "Level: " << m_hero.level() << "\n"
                 << "Exp: " << m_hero.exp() << "\n"
@@ -79,7 +81,19 @@ void Game::play()
         }
 
         if (m_dungeon.isCleared()) {
-            std::cin.get();
+            std::cout << "You cleared the dungeon!\n"
+                      << "Do you want to save your hero? (y/n)";
+            char input = 0;
+
+            while (!(input == 'y' || input == 'n')) {
+                std::cin >> input;
+                std::cin.ignore(1000, '\n');
+            }
+
+            if (input == 'y') {
+                SaveSystem::instance().save(m_hero, "../hero.txt");
+            }
+
             return;
         }
     }

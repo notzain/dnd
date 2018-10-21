@@ -19,6 +19,10 @@ class Hero {
 
 public:
     Hero(const char* name, int level, int hitpoints, int exp, int attack, int defence);
+    Hero(const Hero&) = default; // Copy constructor
+    Hero(Hero&&) = default; // Move constructor
+    Hero& operator=(const Hero&) = default; // Copy assignment operator
+    Hero& operator=(Hero&&) = default; // Move assignment operator
     virtual ~Hero();
 
     const char* name() const;

@@ -24,7 +24,7 @@ const char* Hero::name() const
 
 void Hero::setName(const char* name)
 {
-    delete m_name;
+    delete[] m_name;
 
     const std::size_t nameLength = strlen(name);
     m_name = new char[nameLength + 1];

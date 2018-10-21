@@ -130,11 +130,11 @@ void FightSystem::fight(Hero& hero, Monster** monsters, std::size_t numMonsters,
                 std::cout << "\nYou hit the monster for " << heroAttack << "dmg\n";
 
                 const int newMonsterHp = monsterHp[monsterToFight] - heroAttack;
-                if (monsterHp[monsterToFight] > 0 && newMonsterHp <= 0) {
+                monsterHp[monsterToFight] = newMonsterHp;
+                if (newMonsterHp <= 0) {
                     std::cout << "You've killed " << monsters[monsterToFight]->name() << "\n";
                     ExperienceSystem::instance().addExperience(hero, *monsters[monsterToFight]);
                     std::cout << "\n";
-                    monsterHp[monsterToFight] = newMonsterHp;
                 }
             }
 

@@ -2,8 +2,7 @@
 #include "Item.h"
 
 class KnightSword : public Item {
-    bool m_isEquipped;
-    int m_damage = 4;
+    int m_damage = 12;
 
 public:
     KnightSword();

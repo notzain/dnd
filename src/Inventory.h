@@ -5,7 +5,10 @@
 
 class Item;
 class Inventory {
+public:
     static const int MAX_ITEMS = 3;
+
+private:
     Item* m_items[MAX_ITEMS];
 
 public:
