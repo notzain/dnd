@@ -10,6 +10,9 @@ Dungeon::Dungeon(DungeonConfiguration* configuration, Hero* hero)
     , m_isCleared(false)
 {
     if (m_config->layers <= 0 || m_config->layers > 10) {
+        delete m_hero;
+        delete m_config->monsters;
+        delete m_config;
         throw std::runtime_error("Invalid number of layers.");
     }
     m_layers = new DungeonLayer*[m_config->layers];

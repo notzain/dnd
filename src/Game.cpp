@@ -30,8 +30,9 @@ void Game::play()
         std::cin.ignore(10000, '\n');
 
         switch (input) {
-        case 'q':
+        case 'q': {
             quit = true;
+        } break;
         case 'm': {
             system("cls");
             m_dungeon.activeLayer().print();

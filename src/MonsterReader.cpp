@@ -5,7 +5,6 @@
 #include <iostream>
 
 MonsterReader::MonsterReader()
-    : m_monsters(new MonsterArray)
 {
 }
 
@@ -19,6 +18,8 @@ MonsterArray* MonsterReader::createFromFile(const char* filename)
         std::cerr << "Could not open file " << filename << "\n";
         throw e;
     }
+
+    m_monsters = new MonsterArray;
 
     m_monsters->length = static_cast<size_t>(std::count(
         std::istreambuf_iterator<char>(fileStream),
@@ -46,6 +47,7 @@ MonsterArray* MonsterReader::createFromFile(const char* filename)
 
             m_monsters->array[i] = new Monster(name, stringToLevel(level), attackProbability, damage, defencePercentage, hitpoints);
         } else {
+            delete m_monsters;
             throw std::runtime_error("Error parsing file.");
         }
     }

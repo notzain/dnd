@@ -12,6 +12,7 @@ Hero* HeroFactory::makeFromFile(const char* filename) const
         SaveSystem::instance().load(*hero, filename);
         return hero;
     } catch (const std::exception& e) {
+        delete hero;
         std::cerr << "Could not make hero from file.\n";
         return nullptr;
     }

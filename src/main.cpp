@@ -23,7 +23,23 @@ Hero* makeHero()
     if (input == '1') {
         return factory.makeDefaultHero();
     } else {
-        return factory.makeFromFile("../hero.txt");
+        auto* hero = factory.makeFromFile("../hero.txt");
+        if (hero == nullptr) {
+            std::cout << "Do you want to make a new hero instead? (y/n) ";
+            char newHero = 0;
+            do {
+                std::cin >> newHero;
+                std::cin.ignore(1000, '\n');
+            } while (!(newHero == 'y' || newHero == 'n'));
+
+            if (newHero == 'y') {
+                return factory.makeDefaultHero();
+            } else {
+                return nullptr;
+            }
+        } else {
+            return hero;
+        }
     }
 }
 
@@ -34,8 +50,7 @@ DungeonConfiguration* makeConfig()
     try {
         monsterArray = monsterReader.createFromFile("../monsters.txt");
     } catch (const std::exception& e) {
-        std::cerr << e.what() << "\n\n";
-        std::cerr << "Could not read file\n";
+        std::cerr << "Could not create monsters.\n";
         return nullptr;
     }
 
@@ -61,6 +76,7 @@ DungeonConfiguration* makeConfig()
         /* int layers; */ layers,
         /* MonsterArray* monsters; */ monsterArray
     };
+    return config;
 }
 
 int main()
@@ -72,12 +88,18 @@ int main()
 
     DungeonConfiguration* config = makeConfig();
     if (config == nullptr) {
+        delete hero;
         return EXIT_FAILURE;
     }
 
-    Dungeon dungeon(config, hero);
-    Game game(dungeon, *hero);
-    game.play();
+    try {
+        Dungeon dungeon(config, hero);
+        Game game(dungeon, *hero);
+        game.play();
+    } catch (const std::exception& e) {
+        std::cerr << "You did something stupid.\n";
+        return EXIT_FAILURE;
+    }
 
     return 0;
 }
