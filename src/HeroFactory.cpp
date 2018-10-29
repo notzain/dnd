@@ -1,7 +1,7 @@
 #include "HeroFactory.h"
 #include "Hero.h"
 #include "SaveSystem.h"
-#include <bits/exception.h>
+#include <exception>
 #include <iostream>
 
 Hero* HeroFactory::makeFromFile(const char* filename) const
