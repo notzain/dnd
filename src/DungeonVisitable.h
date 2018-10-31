@@ -18,6 +18,7 @@ public:
         : m_x(x)
         , m_y(y)
     {
+        // copy given description into own description
         const std::size_t descriptionLength = strlen(description);
         m_description = new char[descriptionLength + 1];
         strcpy(m_description, description);

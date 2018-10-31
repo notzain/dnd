@@ -40,6 +40,7 @@ void FightSystem::fight(Hero& hero, Monster& monster, DungeonLayer& layer)
             monsterHp -= heroAttack;
 
             for (int i = 0; i < monster.attackProbability().hitRepeats; ++i) {
+                //check chance that the monster hits the hero
                 if ((RNG::generate(0, 100) < monster.attackProbability().hitPercentage - hero.defence())) {
                     int monsterAttack = RNG::generate(monster.damage().minimum, monster.damage().maximum);
                     std::cout << "You get hit for " << monsterAttack << " damage.\n";
@@ -80,10 +81,12 @@ void FightSystem::fight(Hero& hero, Monster& monster, DungeonLayer& layer)
 void FightSystem::fight(Hero& hero, Monster** monsters, std::size_t numMonsters, DungeonLayer& layer)
 {
     std::cout << "You encounter multiple enemies!\n";
+    // save the HP of the monsters seperately
     int* monsterHp = new int[numMonsters]{ 0 };
     for (int i = 0; i < numMonsters; ++i) {
         monsterHp[i] = monsters[i]->hitpoints();
     }
+    // helper lambda to check if all monsters are still alive
     const auto monstersAlive = [&]() -> bool {
         for (int i = 0; i < numMonsters; ++i) {
             if (monsterHp[i] > 0) {

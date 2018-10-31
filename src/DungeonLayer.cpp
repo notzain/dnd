@@ -15,6 +15,7 @@ DungeonLayer::DungeonLayer(DungeonLayerConfiguration* configuration, Hero& hero,
     , m_hero(hero)
 
 {
+    // initialize all rooms by width and heigh given by the config
     m_visitables = new DungeonVisitable**[m_config->width];
     for (int i = 0; i < m_config->width; ++i) {
         m_visitables[i] = new DungeonVisitable*[m_config->height];
@@ -26,6 +27,7 @@ DungeonLayer::DungeonLayer(DungeonLayerConfiguration* configuration, Hero& hero,
 
     generateLayer();
 
+    // place player on random room that is not special
     int x;
     int y;
     do {
@@ -65,6 +67,7 @@ void DungeonLayer::generateLayer()
     int stairsDownToInit = m_config->numStairsDown;
     bool bossToInit = m_config->hasBoss;
 
+    // replace normal room with a stairway down on a random x/y pos
     while (stairsDownToInit--) {
         int x;
         int y;
@@ -77,6 +80,7 @@ void DungeonLayer::generateLayer()
         m_visitables[x][y] = new DungeonStaircase(*this, x, y, false);
     }
 
+    // replace normal room with a stairway up on a random x/y pos
     while (stairsUpToInit--) {
         int x;
         int y;
@@ -89,6 +93,7 @@ void DungeonLayer::generateLayer()
         m_visitables[x][y] = new DungeonStaircase(*this, x, y, true);
     }
 
+    // replace normal room with a bossroom on a random x/y pos
     if (bossToInit) {
         int x;
         int y;

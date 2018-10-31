@@ -21,6 +21,7 @@ MonsterArray* MonsterReader::createFromFile(const char* filename)
 
     m_monsters = new MonsterArray;
 
+    // find length of file
     m_monsters->length = static_cast<size_t>(std::count(
         std::istreambuf_iterator<char>(fileStream),
         std::istreambuf_iterator<char>(), '\n'));
@@ -33,6 +34,7 @@ MonsterArray* MonsterReader::createFromFile(const char* filename)
         char line[256];
         fileStream.getline(line, 256);
 
+        // check if line is correctly formatted
         if (line[0] == '[' && (line[strlen(line) - 2] == ']' || line[strlen(line) - 1] == ']')) {
             char name[32];
             char level[8];
@@ -41,6 +43,7 @@ MonsterArray* MonsterReader::createFromFile(const char* filename)
             int defencePercentage;
             int hitpoints;
 
+            // read the line and set the correct variables
             sscanf(line, "[%[^;];%[^;];%dx%d;%d-%d;%d;%d]\r",
                 name, level, &attackProbability.hitPercentage, &attackProbability.hitRepeats,
                 &damage.minimum, &damage.maximum, &defencePercentage, &hitpoints);

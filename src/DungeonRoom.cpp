@@ -25,11 +25,17 @@ const char* DecorationDescriptions[] = {
     " The room is empty.",
 };
 
+/*
+    Make a description. 
+    The returned string should be COPIED, you cant use the original pointer!
+*/
 static const char* makeDescription()
 {
+    // create a buffer, set to 0
     static char string[512];
     memset(string, 0, 512);
 
+    // copy random descriptions into the buffer
     strcpy(string, SizeDescriptions[RNG::generate(0, 2)]);
     strcat(string, ConditionDescriptions[RNG::generate(0, 2)]);
     strcat(string, DecorationDescriptions[RNG::generate(0, 2)]);
@@ -62,6 +68,8 @@ void DungeonRoom::visit()
                 m_parentLayer.config().maxEnemyLevel);
             FightSystem::instance().fight(m_parentLayer.hero(), *monster, m_parentLayer);
         } else {
+            // if fighting multiple monsters, make a new array of monsters
+            // and fill it with the monsters
             auto** monsters = new Monster*[monstersToFight];
             for (int i = 0; i < monstersToFight; ++i) {
                 monsters[i] = m_parentLayer.config().monsters->randomMonsterInRange(
@@ -69,6 +77,7 @@ void DungeonRoom::visit()
                     m_parentLayer.config().maxEnemyLevel);
             }
             FightSystem::instance().fight(m_parentLayer.hero(), monsters, monstersToFight, m_parentLayer);
+            // make sure not to delete the array
             delete[] monsters;
         }
     } else {

@@ -20,6 +20,7 @@ void InventorySystem::use(Hero& hero, Monster& monster)
 {
     std::cout << "You look inside your bag.\n";
     bool hasItem = false;
+    // check if hero has items. if so, print the item
     for (int i = 0; i < hero.inventory().itemCount(); ++i) {
         auto* item = hero.inventory().getItem(i);
         if (item != nullptr) {

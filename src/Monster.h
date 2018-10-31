@@ -62,6 +62,7 @@ public:
     void setHitpoints(int hitpoints);
 };
 
+// list of monsters, with helper functions
 struct MonsterArray {
     Monster** array{};
     std::size_t length{};

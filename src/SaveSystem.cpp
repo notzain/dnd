@@ -11,6 +11,7 @@
 #include <fstream>
 #include <iostream>
 
+// hardcoded items to enums
 enum class Items {
     NONE,
     POT1,
@@ -36,6 +37,7 @@ void SaveSystem::save(Hero& hero, const char* filename)
         std::cerr << "Could not open file " << filename << "\n";
         throw e;
     }
+
     // unequip items to get base stats
     bool isEquipped[Inventory::MAX_ITEMS];
     for (int i = 0; i < Inventory::MAX_ITEMS; ++i) {
@@ -50,6 +52,7 @@ void SaveSystem::save(Hero& hero, const char* filename)
         }
     }
 
+    // save hero stats to file
     fileStream << "["
                << hero.name() << ";"
                << hero.level() << ";"
@@ -59,6 +62,7 @@ void SaveSystem::save(Hero& hero, const char* filename)
                << hero.defence() << ";"
                << "]\n";
 
+    // save hero items to file
     fileStream << "[";
     for (int i = 0; i < Inventory::MAX_ITEMS; ++i) {
         auto* item = hero.inventory().getItem(i);
@@ -100,6 +104,7 @@ void SaveSystem::load(Hero& hero, const char* filename)
         throw e;
     }
 
+    // read hero
     {
         char line[256];
         fileStream.getline(line, 256);
@@ -124,6 +129,7 @@ void SaveSystem::load(Hero& hero, const char* filename)
         hero.setDefence(defence);
     }
 
+    // read items
     {
         char line[256];
         fileStream.getline(line, 256);

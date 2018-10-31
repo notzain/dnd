@@ -26,6 +26,7 @@ Item* Inventory::getItem(std::size_t index) const
 
 bool Inventory::addItem(Item* item)
 {
+    // place item in a slot that is not used yet
     for (auto &m_item : m_items) {
         if (m_item == nullptr) {
             m_item = item;
@@ -37,6 +38,7 @@ bool Inventory::addItem(Item* item)
 
 void Inventory::removeItem(Item* item)
 {
+    // remove item from the slots
     for (auto &m_item : m_items) {
         if (m_item == item) {
             delete m_item;

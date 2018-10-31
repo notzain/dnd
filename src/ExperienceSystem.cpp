@@ -46,14 +46,17 @@ ExperienceSystem& ExperienceSystem::instance()
 
 void ExperienceSystem::addExperience(Hero& hero, Monster& monster)
 {
+    // find how many exp a monster should give, based on its level
     const int expToGain = MONSTER_LEVEL_TO_EXP(monster.level());
     std::cout << "You've gained " << expToGain << " exp.\n";
     const int prevHeroExp = hero.exp();
     hero.setExp(prevHeroExp + expToGain);
 
     int level = hero.level();
+    // max level is 5
     if (level > 5)
         return;
+    // if hero has crossed the treshold for exp -> level, he has increased a lvl
     if (prevHeroExp < EXP_TILL_NEXT_LEVEL[level - 1] && hero.exp() >= EXP_TILL_NEXT_LEVEL[level - 1]) {
         hero.setLevel(hero.level() + 1);
         std::cout << "You've leveled up! You can increase a stat by 2:\n"

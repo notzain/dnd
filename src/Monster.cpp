@@ -85,6 +85,11 @@ void Monster::setHitpoints(int hitpoints)
     m_hitpoints = hitpoints;
 }
 
+/*
+    this functions is wrong
+    it actually picks a random monster from 'level' to the end of the array
+    currently works cause we only use it to find a random boss...
+*/
 Monster* MonsterArray::randomMonsterWithLevel(int level)
 {
     int firstMonsterIndex = 0;
@@ -107,6 +112,12 @@ Monster* MonsterArray::randomMonsterInRange(int minLevel, int maxLevel)
         return static_cast<int>(monster->level()) == maxLevel;
     });
 
+    // pointer math
+    // if lowestmonster is X, and highestmonster is Y
+    // every monster between X and Y fits the description
+    // distance between X and Y is mem address of Y - mem address of X
+
+    // so pick a random monster starting from X, ending at Y
     auto* monster = lowestMonster + RNG::generate(0, (highestMonster - lowestMonster));
     return *monster;
 }

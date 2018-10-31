@@ -5,6 +5,10 @@
 #include "DungeonLayer.h"
 #include "Hero.h"
 
+/*
+    Dungeon configuration
+    MonsterArray needs to be manually deleted
+*/
 struct DungeonConfiguration {
     int width;
     int height;
@@ -20,6 +24,10 @@ class Dungeon {
     bool m_isCleared;
 
 public:
+    /*
+        configuration - Dungeon config to be used. Dungeon is owner
+        hero - Hero to play the dungeon. Dungeon is owner
+    */
     Dungeon(DungeonConfiguration* configuration, Hero* hero);
     virtual ~Dungeon();
 
